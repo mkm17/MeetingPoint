@@ -2,7 +2,7 @@ import { Component, ViewChild } from '@angular/core';
 import { Nav, Platform } from 'ionic-angular';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
-
+import { HttpModule } from '@angular/http';
 import { HomePage } from '../pages/home/home';
 import { ListPage } from '../pages/list/list';
 import { MeetingsPage } from '../pages/meetings/meetings';
@@ -13,9 +13,14 @@ import { SettingsPage } from '../pages/settings/settings';
 import { PeoplePage } from '../pages/people/people';
 import { PersonPage } from '../pages/person/person';
 import { SpontaneousPage } from '../pages/spontaneous/spontaneous';
+import { MeetingApi } from '../shared/shared';
 
 @Component({
-  templateUrl: 'app.html'
+  templateUrl: 'app.html',
+  providers:[
+    MeetingApi,
+    HttpModule 
+  ]
 })
 export class MyApp {
   @ViewChild(Nav) nav: Nav;

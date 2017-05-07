@@ -1,0 +1,48 @@
+{
+    "groups":[
+        {
+            "Id":1,
+            "Name":"Group 1"
+        },
+                {
+            "Id":2,
+            "Name":"Group 2"
+        },
+                {
+            "Id":3,
+            "Name":"Group 3"
+        }
+    ],
+    "meetings":[
+                {
+            "Id":1,
+            "Name":"Meeting 1",
+            "GroupId":1,
+            "Date":"05/06/2017"
+        },
+                {
+            "Id":2,
+            "Name":"Meeting 2",
+            "GroupId":0,
+            "Date":"05/12/2017"
+        },
+                {
+            "Id":3,
+            "Name":"Meeting 3",
+            "GroupId":1,
+            "Date":"05/10/2017"
+        }
+    ],
+    "people":[
+                        {
+            "Id":1,
+            "Name":"Person 1",
+            "Nickname":"Nick1"
+        },
+                        {
+            "Id":2,
+            "Name":"Person 2",
+            "Nickname":""
+        }
+    ]
+}            

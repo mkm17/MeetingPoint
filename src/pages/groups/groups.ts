@@ -1,14 +1,10 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, LoadingController } from 'ionic-angular';
 import { GroupPage } from '../group/group';
 import { MockData } from '../../model/mockData';
+import { GroupModel } from '../../model/GroupModel';
+import { MeetingApi } from '../../shared/shared';
 
-/**
- * Generated class for the Groups page.
- *
- * See http://ionicframework.com/docs/components/#navigation for more info
- * on Ionic pages and navigation.
- */
 @IonicPage()
 @Component({
   selector: 'page-groups',
@@ -16,15 +12,25 @@ import { MockData } from '../../model/mockData';
 })
 export class GroupsPage {
 
-groups: Array<{id: number , title: string}>;
+groups: any;//Array<GroupModel>;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
-      let a = new MockData();
-      this.groups = a.groups
+  constructor(public navCtrl: NavController, 
+              public navParams: NavParams,
+              private dataApi: MeetingApi,
+              private loaderController:LoadingController) {
   }
 
   ionViewDidLoad() {
-    console.log('ionViewDidLoad Groups');
+    let loader=this.loaderController.create({
+      content:"Getting Groups..."
+    });
+    loader.present().then(()=>{
+      this.dataApi.getGroups().then(data => {
+        this.groups=data;
+        loader.dismiss();
+      });  
+    });
+    
   }
 
   goToTheGroup(event, group)

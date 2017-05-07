@@ -8,5 +8,9 @@
 </ion-header>
 
 <ion-content padding>
-
+  <ion-list>
+    <ion-item *ngFor="let meeting of meetings" (click)="goToTheMeeting($event,meeting)">
+      {{meeting.Name}}
+    </ion-item>
+  </ion-list>
 </ion-content>

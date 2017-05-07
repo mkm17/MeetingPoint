@@ -1,4 +1,4 @@
-enum  PersonStatus{
+enum PersonStatus{
     Party = 1,
     Dinner=2,
     Sport=4,

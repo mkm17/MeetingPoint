@@ -1,12 +1,11 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, LoadingController } from 'ionic-angular';
 
-/**
- * Generated class for the Meetings page.
- *
- * See http://ionicframework.com/docs/components/#navigation for more info
- * on Ionic pages and navigation.
- */
+import { MeetingPage } from '../meeting/meeting';
+import { MockData } from '../../model/mockData';
+import { MeetingModel } from '../../model/MeetingModel';
+import { MeetingApi } from '../../shared/shared';
+
 @IonicPage()
 @Component({
   selector: 'page-meetings',
@@ -14,11 +13,30 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 })
 export class MeetingsPage {
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
-  }
+meetings:any;// Array<MeetingModel>;
+
+  constructor(public navCtrl: NavController, 
+              public navParams: NavParams,
+              private dataApi:MeetingApi,
+              private loaderController:LoadingController
+  ) {
+}
 
   ionViewDidLoad() {
-    console.log('ionViewDidLoad Meetings');
-  }
+    
+    let loader=this.loaderController.create({
+      content:"Getting Meetings..."
+    });
+    loader.present().then(()=>{
+      this.dataApi.getMeetings().then(data => {
+        this.meetings=data;
+        loader.dismiss();
+      });  
+    });
+ }
 
+  goToTheMeeting(event, meeting)
+  {
+    this.navCtrl.push(MeetingPage,meeting);
+  }
 }

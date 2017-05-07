@@ -1,12 +1,7 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { HomePage } from '../home/home';
 
-/**
- * Generated class for the Meeting page.
- *
- * See http://ionicframework.com/docs/components/#navigation for more info
- * on Ionic pages and navigation.
- */
 @IonicPage()
 @Component({
   selector: 'page-meeting',
@@ -14,11 +9,16 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 })
 export class MeetingPage {
 
+meeting:any;
   constructor(public navCtrl: NavController, public navParams: NavParams) {
-  }
+    this.meeting=this.navParams.data;
+}
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad Meeting');
   }
-
+  goHomePage()
+  {
+    this.navCtrl.setRoot(HomePage);
+  }
 }

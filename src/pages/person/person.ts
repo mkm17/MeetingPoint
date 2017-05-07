@@ -1,24 +1,23 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { HomePage } from '../home/home';
 
-/**
- * Generated class for the Person page.
- *
- * See http://ionicframework.com/docs/components/#navigation for more info
- * on Ionic pages and navigation.
- */
 @IonicPage()
 @Component({
   selector: 'page-person',
   templateUrl: 'person.html',
 })
 export class PersonPage {
-
+person: any;
   constructor(public navCtrl: NavController, public navParams: NavParams) {
-  }
+    this.person=this.navParams.data;
+}
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad Person');
   }
-
+  goHomePage()
+  {
+    this.navCtrl.setRoot(HomePage);
+  }
 }

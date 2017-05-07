@@ -1,14 +1,11 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
-
+import { MeetingsApi } from '../../shares/shared';
+import { HomePage } from '../home/home';
 import { MockData } from '../../model/mockData';
+import { GroupModel } from '../../model/GroupModel';
+import { MeetingApi } from '../../shared/shared'
 
-/**
- * Generated class for the Group page.
- *
- * See http://ionicframework.com/docs/components/#navigation for more info
- * on Ionic pages and navigation.
- */
 @IonicPage()
 @Component({
   selector: 'page-group',
@@ -16,14 +13,20 @@ import { MockData } from '../../model/mockData';
 })
 export class GroupPage {
 
-group: any;
+group: any;//GroupModel;
 
   constructor(public navCtrl: NavController, public navParams: NavParams) {
     this.group=navParams.data;
   }
 
   ionViewDidLoad() {
-    console.log('ionViewDidLoad Group');
   }
+  goHomePage()
+  {
+    this.navCtrl.setRoot(HomePage);
+  }
+  editGroup(group)
+  {
 
+  }
 }

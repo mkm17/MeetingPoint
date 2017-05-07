@@ -1,12 +1,11 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, LoadingController } from 'ionic-angular';
 
-/**
- * Generated class for the People page.
- *
- * See http://ionicframework.com/docs/components/#navigation for more info
- * on Ionic pages and navigation.
- */
+import { PersonPage } from '../person/person';
+import { MockData } from '../../model/mockData';
+import { PersonModel } from '../../model/PersonModel';
+import { MeetingApi } from '../../shared/shared';
+
 @IonicPage()
 @Component({
   selector: 'page-people',
@@ -14,11 +13,30 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 })
 export class PeoplePage {
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
-  }
+people:any;// Array<PersonModel>;
+
+  constructor(public navCtrl: NavController, 
+              public navParams: NavParams,
+              private dataApi:MeetingApi,
+              private loaderController:LoadingController) {
+    
+}
 
   ionViewDidLoad() {
-    console.log('ionViewDidLoad People');
+    let loader=this.loaderController.create({
+      content:"Getting People..."
+    });
+    loader.present().then(()=>{
+      this.dataApi.getPeople().then(data => {
+        this.people=data;
+        loader.dismiss();
+      });  
+    });
+}
+
+  goToThePerson(event, person)
+  {
+    this.navCtrl.push(PersonPage,person);
   }
 
 }

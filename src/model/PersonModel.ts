@@ -1,4 +1,6 @@
-class PersonModel{
+import { MapPoint } from './MapPoint';
+
+export class PersonModel{
     Id: number;
     Name: string;
     Surname: string;
