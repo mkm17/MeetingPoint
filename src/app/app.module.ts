@@ -4,56 +4,60 @@ import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
 
 import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home';
-import { ListPage } from '../pages/list/list';
 import { MeetingsPage } from '../pages/meetings/meetings';
 import { MeetingPage } from '../pages/meeting/meeting';
 import { GroupsPage } from '../pages/groups/groups';
 import { GroupPage } from '../pages/group/group';
-import { SettingsPage } from '../pages/settings/settings';
 import { PeoplePage } from '../pages/people/people';
 import { PersonPage } from '../pages/person/person';
+import { LoginPage } from '../pages/login/login';
 import { SpontaneousPage } from '../pages/spontaneous/spontaneous'
 import { HttpModule } from '@angular/http';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
+import { AgmCoreModule } from 'angular2-google-maps/core';
+import { Facebook } from '@ionic-native/facebook';
+import { NativeStorage } from '@ionic-native/native-storage';
 
 @NgModule({
   declarations: [
     MyApp,
     HomePage,
-    ListPage,
     MeetingPage,
     MeetingsPage,
     GroupPage,
     GroupsPage,
-    SettingsPage,
     PeoplePage,
     PersonPage,
-    SpontaneousPage
+    SpontaneousPage,
+    LoginPage
   ],
   imports: [
     BrowserModule,
     IonicModule.forRoot(MyApp),
-    HttpModule
+    HttpModule,
+        AgmCoreModule.forRoot({
+      apiKey: 'AIzaSyCVIgBkLQFTahbmEbaFn2Nip4aix0_ivEU'
+    }),
   ],
   bootstrap: [IonicApp],
   entryComponents: [
     MyApp,
     HomePage,
-    ListPage,
     MeetingPage,
     MeetingsPage,
     GroupPage,
     GroupsPage,
-    SettingsPage,
     PeoplePage,
     PersonPage,
-    SpontaneousPage
+    SpontaneousPage,
+    LoginPage
   ],
   providers: [
     StatusBar,
     SplashScreen,
-    {provide: ErrorHandler, useClass: IonicErrorHandler}
+    {provide: ErrorHandler, useClass: IonicErrorHandler},
+    Facebook
   ]
 })
 export class AppModule {}

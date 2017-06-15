@@ -11,4 +11,8 @@ export class PersonModel{
     MapPoint: MapPoint;
     Active: boolean;
     Status:PersonStatus;
+    Groups:Array<string>;
+    People:Array<string>;
+    Meetings:Array<string>;
+    LastUpdate:Date;
 }

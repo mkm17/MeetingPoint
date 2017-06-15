@@ -3,7 +3,7 @@
   <ion-navbar>
     <ion-title>{{group.Name}}</ion-title>
     <ion-buttons end>
-      <button (click)="editGroup(group)">
+      <button (click)="editGroup()">
         <ion-icon name="create"></ion-icon>
       </button>
       <button (click)="goHomePage()">
@@ -15,5 +15,16 @@
 </ion-header>
 
 <ion-content padding>
-
+<ion-list>
+   <ion-item>
+    <ion-label color="primary" stacked>Id</ion-label>
+    <ion-input class="groupElement" [(ngModel)]="group.Id" 
+                placeholder="Name" [disabled]="!editEnableGroup"></ion-input>
+  </ion-item>
+  <ion-item>
+    <ion-label color="primary" stacked>Name</ion-label>
+    <ion-input class="groupElement" [(ngModel)]="group.Name" 
+                placeholder="Name" [disabled]="!editEnableGroup"></ion-input>
+  </ion-item>
+</ion-list>
 </ion-content>

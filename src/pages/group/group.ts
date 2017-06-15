@@ -14,9 +14,10 @@ import { MeetingApi } from '../../shared/shared'
 export class GroupPage {
 
 group: any;//GroupModel;
-
+editEnableGroup:boolean;
   constructor(public navCtrl: NavController, public navParams: NavParams) {
-    this.group=navParams.data;
+    this.group=navParams.data.group;
+    this.editEnableGroup=navParams.data.enableEdit;
   }
 
   ionViewDidLoad() {
@@ -25,8 +26,8 @@ group: any;//GroupModel;
   {
     this.navCtrl.setRoot(HomePage);
   }
-  editGroup(group)
+  editGroup()
   {
-
+    this.editEnableGroup=true;
   }
 }

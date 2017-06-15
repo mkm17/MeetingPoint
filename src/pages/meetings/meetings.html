@@ -4,13 +4,30 @@
       <ion-icon name="menu"></ion-icon>
     </button>
     <ion-title>Meetings</ion-title>
+    <ion-buttons end>
+      <button (click)="addNewMeeting()">
+        <ion-icon class="icon" name="add"></ion-icon>
+      </button>
+    </ion-buttons>
   </ion-navbar>
+   <ion-toolbar>
+    <ion-segment color="primary">
+      <ion-segment-button value="actual">
+        <ion-icon name="calendar"></ion-icon>
+      </ion-segment-button>
+      <ion-segment-button value="historical">
+        <ion-icon name="folder"></ion-icon>
+      </ion-segment-button>
+    </ion-segment>
+  </ion-toolbar>
 </ion-header>
 
 <ion-content padding>
-  <ion-list>
-    <ion-item *ngFor="let meeting of meetings" (click)="goToTheMeeting($event,meeting)">
-      {{meeting.Name}}
+  <ion-list sliding="true">
+    <ion-item class="item item-block" *ngFor="let meeting of meetings" 
+    (click)="goToTheMeeting($event,meeting)" >
+      <h2>{{meeting.Name}}</h2>
+      <p>{{meeting.Date}}</p>
     </ion-item>
   </ion-list>
 </ion-content>

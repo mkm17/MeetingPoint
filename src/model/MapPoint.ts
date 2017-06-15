@@ -1,4 +1,4 @@
 export class MapPoint{
-    x: number;
-    y: number;
+    lat: string;
+    lng: string;
 }

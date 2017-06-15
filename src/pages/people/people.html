@@ -4,7 +4,15 @@
       <ion-icon name="menu"></ion-icon>
     </button>
     <ion-title>People</ion-title>
+    <ion-buttons end>
+      <button (click)="addNewPerson()">
+        <ion-icon name="add"></ion-icon>
+      </button>
+    </ion-buttons>
   </ion-navbar>
+  <ion-toolbar>
+    <button ion-button full (click)="addFbPeople()">Add FB people</button>
+  </ion-toolbar>
 </ion-header>
 
 
