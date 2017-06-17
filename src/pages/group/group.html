@@ -3,6 +3,9 @@
   <ion-navbar>
     <ion-title>{{group.Name}}</ion-title>
     <ion-buttons end>
+      <button (click)="updateGroup()" *ngIf="editEnableGroup">
+        <ion-icon name="create"></ion-icon>
+      </button>
       <button (click)="editGroup()">
         <ion-icon name="create"></ion-icon>
       </button>
@@ -25,6 +28,10 @@
     <ion-label color="primary" stacked>Name</ion-label>
     <ion-input class="groupElement" [(ngModel)]="group.Name" 
                 placeholder="Name" [disabled]="!editEnableGroup"></ion-input>
+  </ion-item>
+  <button ion-button [disabled]="!editEnableGroup" (click)="addPeopleView(group)">Add people</button>
+  <ion-item *ngFor="let person of people" >
+    <ion-label color="primary" stacked>{{person.Name}}</ion-label>
   </ion-item>
 </ion-list>
 </ion-content>

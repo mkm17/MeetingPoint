@@ -3,7 +3,7 @@ import { MapPoint } from './MapPoint';
 export class MeetingModel{
     Id: number;
     Name: string;
-    Date: Date;
-    GroupId: number;
+    Date: string;
+    Groups: Array<any>;
     MapPoint:MapPoint;
 }

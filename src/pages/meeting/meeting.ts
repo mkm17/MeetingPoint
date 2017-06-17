@@ -1,7 +1,8 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { HomePage } from '../home/home';
-import { MeetingApi } from '../../shared/shared';
+import { MeetingApi, MeetingModel, GroupModel } from '../../shared/shared';
+import { GroupPage } from '../group/group';
 
 @IonicPage()
 @Component({
@@ -10,32 +11,22 @@ import { MeetingApi } from '../../shared/shared';
 })
 export class MeetingPage {
 
-meeting:any;
+meeting:MeetingModel;
 editEnableMeeting:boolean;
 groupsIds:any;
-peopleIds:any;
-groups:Array<any>=new Array<any>();
-people:Array<any>=new Array<any>();
+groups:Array<GroupModel>=new Array<any>();
 
   constructor(public navCtrl: NavController, public navParams: NavParams,private dataApi:MeetingApi) {
-    console.log(this.navParams.data);
     this.meeting=this.navParams.data.meeting;
     this.editEnableMeeting=this.navParams.data.enableEdit;
-    this.groupsIds=this.getArrayFromSource(this.navParams.data.meeting.Groups);
-    this.peopleIds=this.getArrayFromSource(this.navParams.data.meeting.People);
+    this.groupsIds=this.navParams.data.meeting.Groups;
 }
 
   ionViewDidLoad() {
-    /*this.groupsIds.forEach(element => {
-        this.dataApi.getGroup(element).then(data => {
-          this.groups.push(data);
-        });
-      });
-    this.peopleIds.forEach(element => {
-        this.dataApi.getPerson(element).then(data => {
-          this.people.push(data);
-        });
-    });*/
+    this.dataApi.GetGroupsOfMeeting(this.groupsIds).then(data => {
+      this.groups=data;
+    });
+      
   }
   goHomePage()
   {
@@ -45,8 +36,13 @@ people:Array<any>=new Array<any>();
   {
     this.editEnableMeeting=true;
   }
-  getArrayFromSource(inLineArraySource:string):any
+  goToTheGroup(event, group)
   {
-    return inLineArraySource.split(";");
+    this.navCtrl.push(GroupPage,{group:group,enableEdit:false});
   }
+  updateMeeting()
+  {
+    this.dataApi.UpdateMeeting(this.meeting);  
+  }
+
 }

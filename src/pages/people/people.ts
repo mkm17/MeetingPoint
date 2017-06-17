@@ -27,10 +27,10 @@ people:any;// Array<PersonModel>;
       content:"Getting People..."
     });
     loader.present().then(()=>{
-      /*this.dataApi.getPeople().then(data => {
-        this.people=data;
-        loader.dismiss();
-      });  */
+        this.dataApi.GetUsersPeople().then(data => {
+          this.people=data;
+        });
+      loader.dismiss();
     });
 }
 

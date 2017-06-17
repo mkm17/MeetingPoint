@@ -13,8 +13,7 @@ import { MeetingApi } from '../../shared/shared';
 })
 export class MeetingsPage {
 
-meetings:Array<any> =  new Array<any>();//any;// Array<MeetingModel>;
-meetingsIds:any;
+meetings:Array<MeetingModel> =  new Array<MeetingModel>();
 enableEdit:boolean;
   constructor(public navCtrl: NavController, 
               public navParams: NavParams,
@@ -24,16 +23,13 @@ enableEdit:boolean;
 }
 
   ionViewDidLoad() {
-    //this.meetingsIds=String(this.dataApi.getCurrentUser().Meetings).split(";");
     let loader=this.loaderController.create({
       content:"Getting Meetings..."
     });
     loader.present().then(()=>{
-     // this.meetingsIds.forEach(element => {
-        //this.dataApi.getMeeting(element).then(data => {
-         // this.meetings.push(data);
-       // });
-      //});
+        this.dataApi.GetUsersMeetings().then(data => {
+          this.meetings=data;
+        });
       loader.dismiss();
     });
  }
@@ -45,7 +41,8 @@ enableEdit:boolean;
   }
   addNewMeeting()
   {
-    this.meetings.push({Id:this.meetings.length, Name:"",GroupId:"",Date:"", lat:50, lng:1});
+    let newMeeting=  new MeetingModel();
+    this.meetings.push(newMeeting);
     let meeting=this.meetings[this.meetings.length-1];
     this.enableEdit=true;
     this.navCtrl.push(MeetingPage,{meeting:meeting,enableEdit:this.enableEdit});

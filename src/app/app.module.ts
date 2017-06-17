@@ -10,6 +10,7 @@ import { GroupsPage } from '../pages/groups/groups';
 import { GroupPage } from '../pages/group/group';
 import { PeoplePage } from '../pages/people/people';
 import { PersonPage } from '../pages/person/person';
+import { PeopleList } from '../pages/people-list/people-list';
 import { LoginPage } from '../pages/login/login';
 import { SpontaneousPage } from '../pages/spontaneous/spontaneous'
 import { HttpModule } from '@angular/http';
@@ -18,6 +19,7 @@ import { SplashScreen } from '@ionic-native/splash-screen';
 import { AgmCoreModule } from 'angular2-google-maps/core';
 import { Facebook } from '@ionic-native/facebook';
 import { NativeStorage } from '@ionic-native/native-storage';
+import { Geolocation } from '@ionic-native/geolocation';
 
 @NgModule({
   declarations: [
@@ -29,6 +31,7 @@ import { NativeStorage } from '@ionic-native/native-storage';
     GroupsPage,
     PeoplePage,
     PersonPage,
+    PeopleList,
     SpontaneousPage,
     LoginPage
   ],
@@ -50,6 +53,7 @@ import { NativeStorage } from '@ionic-native/native-storage';
     GroupsPage,
     PeoplePage,
     PersonPage,
+    PeopleList,
     SpontaneousPage,
     LoginPage
   ],
@@ -57,7 +61,8 @@ import { NativeStorage } from '@ionic-native/native-storage';
     StatusBar,
     SplashScreen,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
-    Facebook
+    Facebook,
+    Geolocation
   ]
 })
 export class AppModule {}

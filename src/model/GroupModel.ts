@@ -1,7 +1,7 @@
 import {PersonModel} from './PersonModel'
 
 export class GroupModel{
-    Id: number;
+    Id: string;
     Name: string;
-    People: Array<PersonModel>;
+    People: any[];
 }

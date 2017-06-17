@@ -2,6 +2,9 @@
   <ion-navbar>
     <ion-title>{{meeting.Name}}</ion-title>
     <ion-buttons end>
+      <button (click)="updateMeeting()" *ngIf="editEnableMeeting">
+        <ion-icon name="create"></ion-icon>
+      </button>
       <button (click)="editMeeting()">
         <ion-icon name="create"></ion-icon>
       </button>
@@ -16,12 +19,6 @@
 
 <ion-content padding>
   <ion-list>
-    <ion-item>
-      <ion-label color="primary" stacked>Id</ion-label>
-      <ion-input [(ngModel)]="meeting.Id" 
-                placeholder="Id" disabled>
-      </ion-input>
-    </ion-item>
     <ion-item>
       <ion-label color="primary" stacked>Name</ion-label>
       <ion-input [(ngModel)]="meeting.Name" 
@@ -42,16 +39,10 @@
   </ion-list>
 
   <ion-list>
-    <h2>People invited</h2>
+    <h2>Groups invited</h2>
     <h4>Groups</h4>
-    <ion-item class="item item-block" *ngFor="let group of groups" >
+    <ion-item class="item item-block" *ngFor="let group of groups" (click)="goToTheGroup($event,group)" >
       <p>{{group.Name}}</p>
-    </ion-item>
-  </ion-list>
-    <ion-list>
-      <h4>People</h4>
-    <ion-item class="item item-block" *ngFor="let person of people" >
-      <p>{{person.Name}}</p>
     </ion-item>
   </ion-list>
 </ion-content>

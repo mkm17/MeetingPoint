@@ -1,12 +1,12 @@
 import { MapPoint } from './MapPoint';
 
 export class PersonModel{
-    Id: number;
+    Id: string;
     Name: string;
     Surname: string;
     Nickname: string;
     BirthDate: Date;
-    FbId:number;
+    FbId:string;
     Photo:string;
     MapPoint: MapPoint;
     Active: boolean;
