@@ -32,8 +32,11 @@
       </ion-datetime>
     </ion-item>
     <ion-item>
-    <sebm-google-map [latitude]="meeting.lat" [longitude]="meeting.lng">
-      <sebm-google-map-marker [latitude]="meeting.lat" [longitude]="meeting.lng"></sebm-google-map-marker>
+    <sebm-google-map [latitude]="marker.lat" [longitude]="marker.lng"
+    (mapClick)="mapClicked($event)">
+      <sebm-google-map-marker [latitude]="marker.lat" [longitude]="marker.lng"
+      [markerDraggable]="editEnableMeeting" (dragEnd)="markerDragEnd(marker, $event)"      >
+      </sebm-google-map-marker>
     </sebm-google-map>
     </ion-item>
   </ion-list>
@@ -41,6 +44,7 @@
   <ion-list>
     <h2>Groups invited</h2>
     <h4>Groups</h4>
+    <button ion-button [disabled]="!editEnableMeeting" (click)="addGroupsView(meeting)">Add Groups</button>
     <ion-item class="item item-block" *ngFor="let group of groups" (click)="goToTheGroup($event,group)" >
       <p>{{group.Name}}</p>
     </ion-item>

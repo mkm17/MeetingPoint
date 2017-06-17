@@ -21,30 +21,26 @@ enableEdit:boolean;
   }
 
   ionViewDidLoad() {
+    this.enableEdit=false;
     let loader=this.loaderController.create({
       content:"Getting Groups..."
     });
     loader.present().then(()=>{
-        this.dataApi.GetUsersGroups().then(data => {
-          if(data)
-          {
-            this.groups=data;
-          }
-        });
+            this.groups=this.dataApi.myGroups;
       loader.dismiss();
     });
   }
 
   goToTheGroup(event, group)
   {
+    this.enableEdit=false;
     this.navCtrl.push(GroupPage,{group:group,enableEdit:this.enableEdit});
   }
   addNewGroup()
   {
     let group = new GroupModel();
     group.Id="-1";
-    this.groups.push(group);
     this.enableEdit=true;
-    this.navCtrl.push(GroupPage,{group:group,enableEdit:this.enableEdit});
+    this.navCtrl.push(GroupPage,{group:new GroupModel,enableEdit:this.enableEdit});
   }
 }

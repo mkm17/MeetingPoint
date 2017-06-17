@@ -14,12 +14,20 @@ export class GroupPage {
 
 group:GroupModel;
 people:Array<PersonModel>= new Array<PersonModel>();
+peopleToDisplay:Array<PersonModel>= new Array<PersonModel>();
 editEnableGroup:boolean;
 personListCallback:any;
+isGroupOwner:boolean;
+
   constructor(public navCtrl: NavController, public navParams: NavParams,
   private dataApi:MeetingApi,private loaderController:LoadingController) {
     this.group=navParams.data.group;
     this.editEnableGroup=navParams.data.enableEdit;
+    this.isGroupOwner=(this.group.Owner==this.dataApi.GetCurrentUser().Id);
+    if(!this.group.Owner)
+    {
+      this.group.Owner=this.dataApi.GetCurrentUser().Id;
+    }
   }
 
   ionViewDidLoad() {
@@ -27,9 +35,20 @@ personListCallback:any;
       content:"Getting People..."
     });
     loader.present().then(()=>{
-        this.dataApi.GetUsersPeople().then(data => {
-          this.people=data;
-        });
+         let that=this;
+         if(this.group.People)
+         {
+           console.log(that.group.People);
+          this.group.People.forEach(function(groupPerson)
+          {
+            let person= that.dataApi.myPeople.find(person => person.Id=groupPerson)
+            if(person)
+            {
+              that.people.push(person);
+            }
+          
+          });
+         }
       loader.dismiss();
     });
   }
@@ -49,7 +68,7 @@ personListCallback:any;
       peopleIds.push(person.Id);
     });
     this.group.People=peopleIds;
-    if(this.group.Id=="-1")
+    if(!this.group.Id)
     {
       this.dataApi.AddGroup(this.group);
     }else{

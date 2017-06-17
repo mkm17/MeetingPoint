@@ -4,7 +4,7 @@ import { IonicPage, NavController, NavParams, LoadingController } from 'ionic-an
 import { MeetingPage } from '../meeting/meeting';
 import { MockData } from '../../model/mockData';
 import { MeetingModel } from '../../model/MeetingModel';
-import { MeetingApi } from '../../shared/shared';
+import { MeetingApi, MapPoint } from '../../shared/shared';
 
 @IonicPage()
 @Component({
@@ -27,10 +27,8 @@ enableEdit:boolean;
       content:"Getting Meetings..."
     });
     loader.present().then(()=>{
-        this.dataApi.GetUsersMeetings().then(data => {
-          this.meetings=data;
-        });
-      loader.dismiss();
+        this.meetings=this.dataApi.myMeetings;
+        loader.dismiss();
     });
  }
 
@@ -42,9 +40,10 @@ enableEdit:boolean;
   addNewMeeting()
   {
     let newMeeting=  new MeetingModel();
-    this.meetings.push(newMeeting);
-    let meeting=this.meetings[this.meetings.length-1];
+    newMeeting.MapPoint=new MapPoint();
+    //this.meetings.push(newMeeting);
+    //let meeting=this.meetings[this.meetings.length-1];
     this.enableEdit=true;
-    this.navCtrl.push(MeetingPage,{meeting:meeting,enableEdit:this.enableEdit});
+    this.navCtrl.push(MeetingPage,{meeting:newMeeting,enableEdit:this.enableEdit});
   }
 }

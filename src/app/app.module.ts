@@ -11,6 +11,7 @@ import { GroupPage } from '../pages/group/group';
 import { PeoplePage } from '../pages/people/people';
 import { PersonPage } from '../pages/person/person';
 import { PeopleList } from '../pages/people-list/people-list';
+import { GroupsList } from '../pages/groups-list/groups-list';
 import { LoginPage } from '../pages/login/login';
 import { SpontaneousPage } from '../pages/spontaneous/spontaneous'
 import { HttpModule } from '@angular/http';
@@ -29,6 +30,7 @@ import { Geolocation } from '@ionic-native/geolocation';
     MeetingsPage,
     GroupPage,
     GroupsPage,
+    GroupsList,
     PeoplePage,
     PersonPage,
     PeopleList,
@@ -51,6 +53,7 @@ import { Geolocation } from '@ionic-native/geolocation';
     MeetingsPage,
     GroupPage,
     GroupsPage,
+    GroupsList,
     PeoplePage,
     PersonPage,
     PeopleList,

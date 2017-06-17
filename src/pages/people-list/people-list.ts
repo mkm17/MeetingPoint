@@ -24,23 +24,21 @@ callback:any;
     let loader=this.loaderController.create({
       content:"Getting People..."
     });
-    loader.present().then(()=>{
-        this.dataApi.GetUsersPeople().then(data => {
-          this.people=data;
-              let that=this;
-          this.people.forEach(function(personModel){
+    loader.present().then(()=>{      
+          this.people=this.dataApi.myPeople;
+          let that=this;
+          //this.people.forEach(function(personModel)
+          for(let personModel in this.people){
             let isChoosen=false;
-            if(that.currentPeople && (that.currentPeople.indexOf(personModel.Id) > -1))
+            if(that.currentPeople && (that.currentPeople.indexOf(this.people[personModel].Id) > -1))
             {
               isChoosen=true;
             }
             let model = new PersonModelView();
             model.isChoosen=isChoosen;
-            model.model=personModel;
+            model.model=this.people[personModel];
             that.peopleView.push(model);
-          });
-
-        });
+          }//);
       loader.dismiss();
     });
   }

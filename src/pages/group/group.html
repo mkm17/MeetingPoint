@@ -6,7 +6,7 @@
       <button (click)="updateGroup()" *ngIf="editEnableGroup">
         <ion-icon name="create"></ion-icon>
       </button>
-      <button (click)="editGroup()">
+      <button (click)="editGroup()" *ngIf="isGroupOwner">
         <ion-icon name="create"></ion-icon>
       </button>
       <button (click)="goHomePage()">
