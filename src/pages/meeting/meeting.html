@@ -2,13 +2,13 @@
   <ion-navbar>
     <ion-title>{{meeting.Name}}</ion-title>
     <ion-buttons end>
-      <button (click)="updateMeeting()" *ngIf="editEnableMeeting">
+      <button ion-button icon-only (click)="updateMeeting()" *ngIf="editEnableMeeting">
         <ion-icon name="create"></ion-icon>
       </button>
-      <button (click)="editMeeting()">
+      <button ion-button icon-only (click)="editMeeting()">
         <ion-icon name="create"></ion-icon>
       </button>
-      <button (click)="goHomePage()">
+      <button ion-button icon-only (click)="goHomePage()">
         <ion-icon name="home"></ion-icon>
       </button>
     </ion-buttons>

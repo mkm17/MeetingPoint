@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, LoadingController } from 'ionic-angular';
 import { MeetingsApi } from '../../shares/shared';
 import { HomePage } from '../home/home';
+import { PersonPage } from '../person/person';
 import { PeopleList } from '../people-list/people-list';
 import { MeetingApi, GroupModel,PersonModel } from '../../shared/shared';
 
@@ -86,6 +87,9 @@ isGroupOwner:boolean;
     }
     this.navCtrl.push(PeopleList,{currentPeople:group.People,callback: this.personListCallback});
   }
-
+  goToThePerson(event, person)
+  {
+    this.navCtrl.push(PersonPage,person);
+  }
  
 }

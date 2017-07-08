@@ -27,9 +27,7 @@ people:any;// Array<PersonModel>;
       content:"Getting People..."
     });
     loader.present().then(()=>{
-        this.dataApi.GetUsersPeople().then(data => {
-          this.people=data;
-        });
+          this.people=this.dataApi.myPeople;
       loader.dismiss();
     });
 }

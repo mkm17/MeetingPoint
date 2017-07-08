@@ -28,6 +28,17 @@ export class MeetingApi {
         this.myMeetings= new Array<MeetingModel>();
     }
 
+    GetActivePropertyOfUser():boolean
+    {
+        if(this.currentUser)
+        {
+            return this.currentUser.Active;
+        }
+        else{
+            return false;
+        }
+    }
+
     GetCurrentUser():PersonModel
     {
         if(!this.currentUser)
@@ -167,26 +178,6 @@ export class MeetingApi {
         }
         return null;
     }
-    GetGroupsOfMeeting(groupIds:any):Promise<Array<GroupModel>>
-    {
-           let that=this;
-           let groups:Array<GroupModel>= new Array<GroupModel>();
-           return new Promise<Array<GroupModel>>((resolve, reject) => {
-               groupIds.forEach(function(value,groupId)
-               {
-                   that.groupRefDB.child(groupId+"/").on("value",function(data)
-                   {
-                       console.log(data.val());
-                       let group = new GroupModel();
-                       group.Name=data.val().Name;
-                       group.Id=groupId;
-                       group.People=data.val().People;
-                       groups.push(group);
-                   });
-               });
-               resolve(groups);                               
-        });
-    }
 
     GetUsersPeople():Promise<Array<PersonModel>>
     {
@@ -194,9 +185,11 @@ export class MeetingApi {
         {
             let that=this;
             return new Promise<Array<PersonModel>>((resolve, reject) => {
-                this.currentUser.People.forEach(function(value,personId)
+                for (var key in this.currentUser.People) {
+                if (this.currentUser.People.hasOwnProperty(key)) //{
+                //this.currentUser.People.forEach(function(value,personId)
                 {
-                    that.peopleRefDB.child(personId+"/").on("value",function(data)
+                    that.peopleRefDB.child(key+"/").on("value",function(data)
                     {
                         let newItem=false;
                         let person = that.myPeople.find(person => person.Id==data.key);
@@ -225,7 +218,7 @@ export class MeetingApi {
                             that.myPeople.push(person);
                         }
                     });
-                });
+                }}//);
                 resolve(that.myPeople);                               
             });
         }

@@ -8,8 +8,19 @@
 </ion-header>
 
 <ion-content padding>
-<sebm-google-map [latitude]="lat" [longitude]="lng">
-  <sebm-google-map-marker [latitude]="lat" [longitude]="lng"></sebm-google-map-marker>
-</sebm-google-map>
+  <button ion-button (click)="loadMap()">Refresh Map</button>
+<!--<sebm-google-map [latitude]="currentPosition.lat" [longitude]="currentPosition.lng">
+      <sebm-google-map-circle [latitude]="currentPosition.lat" [longitude]="currentPosition.lng" 
+          [radius]="1000"
+          [fillColor]="'red'">
+      </sebm-google-map-circle>
+  <sebm-google-map-marker *ngFor="let activePerson of activePeople" 
+  [latitude]="activePerson.MapPoint.lat" [longitude]="activePerson.MapPoint.lng"
+          [markerDraggable]="false">
 
+  </sebm-google-map-marker>
+
+</sebm-google-map>-->
+
+<div #map id="map"></div>  
 </ion-content>

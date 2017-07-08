@@ -3,13 +3,13 @@
   <ion-navbar>
     <ion-title>{{group.Name}}</ion-title>
     <ion-buttons end>
-      <button (click)="updateGroup()" *ngIf="editEnableGroup">
+      <button ion-button icon-only (click)="updateGroup()" *ngIf="editEnableGroup">
         <ion-icon name="create"></ion-icon>
       </button>
-      <button (click)="editGroup()" *ngIf="isGroupOwner">
+      <button ion-button icon-only (click)="editGroup()" *ngIf="isGroupOwner">
         <ion-icon name="create"></ion-icon>
       </button>
-      <button (click)="goHomePage()">
+      <button ion-button icon-only (click)="goHomePage()">
         <ion-icon name="home"></ion-icon>
       </button>
     </ion-buttons>
@@ -30,8 +30,8 @@
                 placeholder="Name" [disabled]="!editEnableGroup"></ion-input>
   </ion-item>
   <button ion-button [disabled]="!editEnableGroup" (click)="addPeopleView(group)">Add people</button>
-  <ion-item *ngFor="let person of people" >
-    <ion-label color="primary" stacked>{{person.Name}}</ion-label>
-  </ion-item>
+      <ion-item class="item item-block" *ngFor="let person of people" (click)="goToThePerson($event,person)" >
+      <p>{{person.Name}}</p>
+    </ion-item>
 </ion-list>
 </ion-content>

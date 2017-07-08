@@ -12,6 +12,7 @@
   <meta name="theme-color" content="#4e8ef7">
  
   <!-- cordova.js required for cordova apps -->
+  <script src="http://maps.google.com/maps/api/js?key=AIzaSyBgOZQ5gNo4e-QJdmQvdjs2rb2IeDeuhRY"></script>
   <script src="cordova.js"></script>
 
   <!-- un-comment this code to enable service worker
@@ -31,6 +32,19 @@
   <!-- Ionic's root component and where the app will load -->
   <ion-app></ion-app>
 
+<script src="https://www.gstatic.com/firebasejs/4.1.2/firebase.js"></script>
+<script>
+  // Initialize Firebase
+  var config = {
+    apiKey: "AIzaSyAHPNRccILfnPSWIH7lvchWi7fcA1dq6pg",
+    authDomain: "meetingpoint-83dfa.firebaseapp.com",
+    databaseURL: "https://meetingpoint-83dfa.firebaseio.com",
+    projectId: "meetingpoint-83dfa",
+    storageBucket: "meetingpoint-83dfa.appspot.com",
+    messagingSenderId: "60524404018"
+  };
+  firebase.initializeApp(config);
+</script>
   <!-- The polyfills js is generated during the build process -->
   <script src="build/polyfills.js"></script>
 

@@ -33,8 +33,9 @@ export class MyApp {
   //rootPage: any = HomePage;
   rootPage: any =LoginPage;
   pictureLink:any;
-  active:boolean;
+  active:boolean=false;
   user: PersonModel;
+  activeButtonDisabled:boolean=true;
 
   pages: Array<{title: string, component: any}>;
 
@@ -52,7 +53,6 @@ export class MyApp {
       { title: 'People', component: PeoplePage},
       { title: 'Spontaneous', component :SpontaneousPage}
     ];
-    this.active=false;
   }
 
   initializeApp() {
@@ -68,6 +68,13 @@ export class MyApp {
 
   updateActive()
   {
-      this.dataApi.UpdateActiveValue(this.active)
+      this.dataApi.UpdateActiveValue(this.active);
+  }
+
+  menuOpened(){
+    this.active=this.dataApi.GetActivePropertyOfUser();
+    this.activeButtonDisabled=false;
+  }
+  menuClosed(){
   }
 }
