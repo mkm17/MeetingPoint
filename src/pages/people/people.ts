@@ -1,9 +1,6 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, LoadingController } from 'ionic-angular';
-
 import { PersonPage } from '../person/person';
-import { MockData } from '../../model/mockData';
-import { PersonModel } from '../../model/PersonModel';
 import { MeetingApi } from '../../shared/shared';
 
 @IonicPage()

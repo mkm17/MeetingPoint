@@ -1,7 +1,6 @@
 import { Component, ViewChild, ElementRef } from '@angular/core';
 import { IonicPage, NavController, NavParams, LoadingController } from 'ionic-angular';
-import { MeetingPage } from '../meeting/meeting';
-import { MeetingApi, MapPoint, MeetingModel, PersonModel } from '../../shared/shared';
+import { MeetingApi, PersonModel } from '../../shared/shared';
 
 declare var google;
 
@@ -64,7 +63,7 @@ export class SpontaneousPage {
  
     this.map = new google.maps.Map(this.mapElement.nativeElement, mapOptions);
 
-    var cityCircle = new google.maps.Circle({
+    let cityCircle = new google.maps.Circle({
       strokeColor: '#FF0000',
       strokeOpacity: 0.8,
       strokeWeight: 2,

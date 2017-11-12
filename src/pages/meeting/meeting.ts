@@ -1,10 +1,9 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { HomePage } from '../home/home';
-import { MeetingApi, MeetingModel, GroupModel, MapPoint } from '../../shared/shared';
+import { MeetingApi, MeetingModel, GroupModel } from '../../shared/shared';
 import { GroupPage } from '../group/group';
 import { GroupsList } from '../groups-list/groups-list';
-import { AgmCoreModule } from 'angular2-google-maps/core';
 
 @IonicPage()
 @Component({

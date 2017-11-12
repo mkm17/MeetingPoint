@@ -5,17 +5,14 @@ import { SplashScreen } from '@ionic-native/splash-screen';
 import { HttpModule } from '@angular/http';
 import { HomePage } from '../pages/home/home';
 import { MeetingsPage } from '../pages/meetings/meetings';
-import { MeetingPage } from '../pages/meeting/meeting';
 import { GroupsPage } from '../pages/groups/groups';
-import { GroupPage } from '../pages/group/group';
 import { PeoplePage } from '../pages/people/people';
-import { PersonPage } from '../pages/person/person';
 import { LoginPage } from '../pages/login/login';
 import { SpontaneousPage } from '../pages/spontaneous/spontaneous';
 import { MeetingApi, PersonModel } from '../shared/shared';
 import { AgmCoreModule } from 'angular2-google-maps/core';
 import { NativeStorage } from '@ionic-native/native-storage';
-import { Facebook, FacebookLoginResponse } from '@ionic-native/facebook';
+import { Facebook } from '@ionic-native/facebook';
 import * as firebase from "firebase";
 
 @Component({
@@ -29,8 +26,6 @@ import * as firebase from "firebase";
 })
 export class MyApp {
   @ViewChild(Nav) nav: Nav;
-
-  //rootPage: any = HomePage;
   rootPage: any =LoginPage;
   pictureLink:any;
   active:boolean=false;

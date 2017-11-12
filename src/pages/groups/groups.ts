@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, LoadingController } from 'ionic-angular';
 import { GroupPage } from '../group/group';
-import { MockData } from '../../model/mockData';
 import { GroupModel } from '../../model/GroupModel';
 import { MeetingApi } from '../../shared/shared';
 

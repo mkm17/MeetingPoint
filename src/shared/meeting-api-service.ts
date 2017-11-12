@@ -1,8 +1,6 @@
 import { Injectable } from '@angular/core';
-import { Http, Response} from '@angular/http';
 import 'rxjs';
-import { Observable } from 'rxjs/Observable';
-import { GroupModel,MapPoint,MeetingModel,PersonModel,Guid } from './shared';
+import { GroupModel,MapPoint,MeetingModel,PersonModel } from './shared';
 import { Geolocation } from '@ionic-native/geolocation';
 
 @Injectable()
