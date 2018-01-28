@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
-import { NativeStorage } from '@ionic-native/native-storage';
+//import { NativeStorage } from '@ionic-native/native-storage';
 //import { Facebook } from '@ionic-native/facebook';
 import { HomePage } from '../home/home';
 import { MeetingApi } from '../../shared/shared';
@@ -15,7 +15,7 @@ export class LoginPage {
 user:any;
 //FB_APP_ID: number = 151354172070423;
   constructor(public navCtrl: NavController, public navParams: NavParams,
-  private nativeStorage: NativeStorage, private dataApi:MeetingApi,){//, private facebook: Facebook) {
+  /*private nativeStorage: NativeStorage,*/ private dataApi:MeetingApi,){//, private facebook: Facebook) {
 }
 
 doFbLogin(){

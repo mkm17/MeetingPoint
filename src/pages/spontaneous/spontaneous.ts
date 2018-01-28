@@ -1,8 +1,6 @@
-import { Component, ViewChild, ElementRef } from '@angular/core';
+import { Component, ViewChild/*, ElementRef */} from '@angular/core';
 import { IonicPage, NavController, NavParams, LoadingController } from 'ionic-angular';
 import { MeetingApi, PersonModel } from '../../shared/shared';
-
-declare var google;
 
 @IonicPage()
 @Component({
@@ -11,8 +9,8 @@ declare var google;
 })
 export class SpontaneousPage {
   
-  @ViewChild('map') mapElement: ElementRef;
-  map: any;
+ //@ViewChild('map') mapElement: ElementRef;
+  //map: any;
   
   currentPosition:CurrentPositionModel=new CurrentPositionModel();
   showActive:boolean;
@@ -37,7 +35,7 @@ export class SpontaneousPage {
   }
 
   loadMap(){
- console.log("raz");
+
   let activePeople:Array<PersonModel>=new Array<PersonModel>();
   let inactivePeople:Array<PersonModel>=new Array<PersonModel>();
     for(let personId in this.dataApi.myPeople)
@@ -53,17 +51,17 @@ export class SpontaneousPage {
       }
     }
 
-    let latLng = new google.maps.LatLng(this.currentPosition.lat, this.currentPosition.lng);
- 
+    //let latLng = new google.maps.LatLng(this.currentPosition.lat, this.currentPosition.lng);
+ /*
     let mapOptions = {
       center: latLng,
       zoom: 15,
       mapTypeId: google.maps.MapTypeId.ROADMAP
-    }
+    }*/
  
-    this.map = new google.maps.Map(this.mapElement.nativeElement, mapOptions);
+   // this.map = new google.maps.Map(this.mapElement.nativeElement, mapOptions);
 
-    let cityCircle = new google.maps.Circle({
+    /*let cityCircle = new google.maps.Circle({
       strokeColor: '#FF0000',
       strokeOpacity: 0.8,
       strokeWeight: 2,
@@ -72,9 +70,9 @@ export class SpontaneousPage {
       map: this.map,
       center: {lat: this.currentPosition.lat, lng: this.currentPosition.lng},
       radius: 50
-    });
+    });*/
 
-    let that = this;
+   /* let that = this;
     activePeople.forEach(function(active){
           var activeMarker = new google.maps.Marker({
           position: {lat:Number(active.MapPoint.lat),lng:Number(active.MapPoint.lng)},
@@ -87,7 +85,7 @@ export class SpontaneousPage {
                   strokeColor:"#B40404"
           },
         });
-    });
+    });*/
     
   }
 }

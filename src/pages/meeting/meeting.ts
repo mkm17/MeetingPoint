@@ -41,7 +41,7 @@ groups:Array<GroupModel>=new Array<GroupModel>();
          {
           this.meeting.Groups.forEach(function(meetingGroup)
           {
-            let group= that.dataApi.myGroups.find(group => group.Id=meetingGroup)
+            let group= that.dataApi.myGroups.find(group => group.Id===meetingGroup)
             if(group)
             {
               that.groups.push(group);
@@ -56,7 +56,7 @@ groups:Array<GroupModel>=new Array<GroupModel>();
   }
   editMeeting()
   {
-    this.editEnableMeeting=true;
+    this.editEnableMeeting=!this.editEnableMeeting;
   }
   goToTheGroup(event, group)
   {
@@ -77,6 +77,7 @@ groups:Array<GroupModel>=new Array<GroupModel>();
     }else{
       this.dataApi.UpdateMeeting(this.meeting, this.groups);
     } 
+    this.editEnableMeeting=false;
   }
   markerDragEnd(m: Marker, $event: any) {
 

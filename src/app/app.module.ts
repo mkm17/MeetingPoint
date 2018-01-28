@@ -17,7 +17,7 @@ import { SpontaneousPage } from '../pages/spontaneous/spontaneous'
 import { HttpModule } from '@angular/http';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
-import { AgmCoreModule } from 'angular2-google-maps/core';
+//import { AgmCoreModule } from 'angular2-google-maps/core';
 import { Facebook } from '@ionic-native/facebook';
 //import { NativeStorage } from '@ionic-native/native-storage';
 import { Geolocation } from '@ionic-native/geolocation';
@@ -40,10 +40,7 @@ import { Geolocation } from '@ionic-native/geolocation';
   imports: [
     BrowserModule,
     IonicModule.forRoot(MyApp),
-    HttpModule,
-        AgmCoreModule.forRoot({
-      apiKey: 'AIzaSyCVIgBkLQFTahbmEbaFn2Nip4aix0_ivEU'
-    }),
+    HttpModule
   ],
   bootstrap: [IonicApp],
   entryComponents: [

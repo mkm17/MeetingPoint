@@ -12,10 +12,10 @@
   </ion-navbar>
    <ion-toolbar>
     <ion-segment color="primary">
-      <ion-segment-button value="actual">
+      <ion-segment-button value="actual" (click)="showActualMeetings()">
         <ion-icon name="calendar"></ion-icon>
       </ion-segment-button>
-      <ion-segment-button value="historical">
+      <ion-segment-button value="historical" (click)="showHistoricalMeetigs()">
         <ion-icon name="folder"></ion-icon>
       </ion-segment-button>
     </ion-segment>
@@ -24,10 +24,15 @@
 
 <ion-content padding>
   <ion-list sliding="true">
-    <ion-item class="item item-block" *ngFor="let meeting of meetings" 
-    (click)="goToTheMeeting($event,meeting)" >
-      <h2>{{meeting.Name}}</h2>
-      <p>{{meeting.Date}}</p>
+    <div *ngIf="meetings.length==0">
+      There is no items to display
+    </div>
+    <ion-item 
+      class="item item-block" 
+      *ngFor="let meeting of meetings" 
+      (click)="goToTheMeeting($event,meeting)" >
+        <h2>{{meeting.Name}}</h2>
+        <p>{{meeting.Date}}</p> <span> {{meeting.daysDiff}} days</span>
     </ion-item>
   </ion-list>
 </ion-content>

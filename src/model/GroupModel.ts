@@ -1,6 +1,6 @@
-export class GroupModel{
+export class GroupModel {
     Id: string;
     Name: string;
-    People: any[];
-    Owner:string;
+    People: string[];
+    Owner: string;
 }

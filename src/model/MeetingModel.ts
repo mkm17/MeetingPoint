@@ -1,10 +1,11 @@
 import { MapPoint } from './MapPoint';
 
-export class MeetingModel{
+export class MeetingModel {
     Id: string;
     Name: string;
     Date: string;
-    Groups: Array<any>;
-    MapPoint:MapPoint;
-    Owner:string;
+    Groups: Array<string>;
+    MapPoint: MapPoint;
+    Owner: string;
+    daysDiff?: number;
 }

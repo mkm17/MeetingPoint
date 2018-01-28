@@ -3,9 +3,9 @@
     <ion-title>{{meeting.Name}}</ion-title>
     <ion-buttons end>
       <button ion-button icon-only (click)="updateMeeting()" *ngIf="editEnableMeeting">
-        <ion-icon name="create"></ion-icon>
+        <ion-icon name="arrow-dropup-circle"></ion-icon>
       </button>
-      <button ion-button icon-only (click)="editMeeting()">
+      <button ion-button icon-only (click)="editMeeting()" >
         <ion-icon name="create"></ion-icon>
       </button>
       <button ion-button icon-only (click)="goHomePage()">
@@ -27,17 +27,17 @@
     </ion-item>
     <ion-item>
       <ion-label color="primary" stacked>Id</ion-label>
-      <ion-datetime displayFormat="MM/DD/YYYY HH:mm" [(ngModel)]="meeting.Date" 
+      <ion-datetime displayFormat="DD.MM.YYYY, HH:mm" [(ngModel)]="meeting.Date" 
                 placeholder="Date" [disabled]="!editEnableMeeting">
       </ion-datetime>
     </ion-item>
     <ion-item>
-    <sebm-google-map [latitude]="marker.lat" [longitude]="marker.lng"
+    <!--<sebm-google-map [latitude]="marker.lat" [longitude]="marker.lng"
     (mapClick)="mapClicked($event)">
       <sebm-google-map-marker [latitude]="marker.lat" [longitude]="marker.lng"
       [markerDraggable]="editEnableMeeting" (dragEnd)="markerDragEnd(marker, $event)"      >
       </sebm-google-map-marker>
-    </sebm-google-map>
+    </sebm-google-map>-->
     </ion-item>
   </ion-list>
 

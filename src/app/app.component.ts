@@ -10,9 +10,9 @@ import { PeoplePage } from '../pages/people/people';
 import { LoginPage } from '../pages/login/login';
 import { SpontaneousPage } from '../pages/spontaneous/spontaneous';
 import { MeetingApi, PersonModel } from '../shared/shared';
-import { AgmCoreModule } from 'angular2-google-maps/core';
+//import { AgmCoreModule } from 'angular2-google-maps/core';
 import { NativeStorage } from '@ionic-native/native-storage';
-import { Facebook } from '@ionic-native/facebook';
+//import { Facebook } from '@ionic-native/facebook';
 import * as firebase from "firebase";
 
 @Component({
@@ -20,7 +20,6 @@ import * as firebase from "firebase";
   providers:[
     MeetingApi,
     HttpModule,
-    AgmCoreModule,
     NativeStorage
   ]
 })
@@ -36,7 +35,7 @@ export class MyApp {
 
   constructor(public platform: Platform, public statusBar: StatusBar,
    public splashScreen: SplashScreen, private nativeStorage: NativeStorage,
-   private facebook:Facebook, private dataApi: MeetingApi) {
+  /* private facebook:Facebook,*/ private dataApi: MeetingApi) {
     this.initializeApp();
 
     this.pictureLink= "https://graph.facebook.com/1739113556102774/picture?type=large";
