@@ -1,4 +1,4 @@
-import { MapPoint } from './MapPoint';
+import { MapPoint } from '../shared/shared';
 
 export class MeetingModel {
     Id: string;

@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, LoadingController } from 'ionic-angular';
-import { MeetingApi, GroupModel } from '../../shared/shared';
+import { MeetingApi, GroupModel, GroupModelView } from '../../shared/shared';
 
 @IonicPage()
 @Component({
@@ -9,57 +9,43 @@ import { MeetingApi, GroupModel } from '../../shared/shared';
 })
 export class GroupsList {
 
-currentGroups:string[];
-groups:Array<GroupModel>=new Array<GroupModel>(); 
-groupsView:Array<GroupModelView>= new Array<GroupModelView>();
-callback:any;
+  private currentGroups: string[];
+  private groups: Array<GroupModel> = new Array<GroupModel>();
+  private groupsView: Array<GroupModelView> = new Array<GroupModelView>();
 
   constructor(public navCtrl: NavController, public navParams: NavParams,
-    private dataApi:MeetingApi, private loaderController:LoadingController) {
-    this.currentGroups=navParams.data.currentGroups;
-    this.callback = this.navParams.data.callback;
+    private dataApi: MeetingApi, private loaderController: LoadingController) {
+
+    this.currentGroups = navParams.data.currentGroups;
   }
 
-  ionViewDidLoad() {
-     let loader=this.loaderController.create({
-      content:"Getting People..."
+  public async ionViewDidLoad() {
+    let loader = this.loaderController.create({
+      content: "Getting People..."
     });
-    loader.present().then(()=>{      
-          this.groups=this.dataApi.myGroups;
-          let that=this;
-          for(let groupModel in this.groups)
-          {
-          //this.groups.forEach(function(personModel){
-            let isChoosen=false;
-            if(that.currentGroups && (that.currentGroups.indexOf(this.groups[groupModel].Id) > -1))
-            {
-              isChoosen=true;
-            }
-            let model = new GroupModelView();
-            model.isChoosen=isChoosen;
-            model.model=this.groups[groupModel];
-            that.groupsView.push(model);
-          }//);
-      loader.dismiss();
-    });
-  }
-submitChanges()
-{
-  console.log(this.groupsView);
-  let choosenGroups:Array<GroupModel>=new Array<GroupModel>();
-  this.groupsView.forEach(function(group)
-  {
-    if(group.isChoosen)
-    {
-      choosenGroups.push(group.model);
+    loader.present()
+    this.groups = await this.dataApi.myGroups;
+    for (let groupModel in this.groups) {
+      let isChoosen = false;
+      if (this.currentGroups && (this.currentGroups.indexOf(this.groups[groupModel].Id) > -1)) {
+        isChoosen = true;
+      }
+      let model = new GroupModelView();
+      model.isChoosen = isChoosen;
+      model.model = this.groups[groupModel];
+      this.groupsView.push(model);
     }
-  });
-  this.callback(choosenGroups).then(()=>{
+    loader.dismiss();
+  }
+
+  public async submitChanges() {
+    let choosenGroups: Array<GroupModel> = new Array<GroupModel>();
+    this.groupsView.forEach(function (group) {
+      if (group.isChoosen) {
+        choosenGroups.push(group.model);
+      }
+    });
+    await this.navParams.data.callback(choosenGroups);
     this.navCtrl.pop();
- });
-}
-}
-class GroupModelView{
-  model:GroupModel;
-  isChoosen:boolean;
+  }
 }

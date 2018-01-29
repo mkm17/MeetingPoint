@@ -12,13 +12,13 @@ import { MeetingApi } from '../../shared/shared';
 })
 export class LoginPage {
 
-user:any;
+public user:any;
 //FB_APP_ID: number = 151354172070423;
   constructor(public navCtrl: NavController, public navParams: NavParams,
   /*private nativeStorage: NativeStorage,*/ private dataApi:MeetingApi,){//, private facebook: Facebook) {
 }
 
-doFbLogin(){
+public doFbLogin(){
   /*let permissions = ["email"];
   this.facebook.login(permissions).then(
   (response)=> 
@@ -51,7 +51,7 @@ doFbLogin(){
 
   }
 
-  ionViewDidLoad() {
+  public ionViewDidLoad() {
     console.log('ionViewDidLoad Login');
   }
 

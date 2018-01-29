@@ -1,5 +1,4 @@
-import { MapPoint } from './MapPoint';
-import { GroupModel, MeetingModel } from '../shared/shared';
+import { GroupModel, MeetingModel, MapPoint } from '../shared/shared';
 
 export class PersonModel {
     Id: string;

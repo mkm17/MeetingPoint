@@ -9,37 +9,38 @@ import { MeetingApi } from '../../shared/shared';
   selector: 'page-groups',
   templateUrl: 'groups.html',
 })
+
 export class GroupsPage {
+  private groups: Array<GroupModel> = new Array<GroupModel>();
+  private enableEdit: boolean;
+  
+  constructor(public navCtrl: NavController,
+    public navParams: NavParams,
+    private dataApi: MeetingApi,
+    private loaderController: LoadingController) {
 
-groups:Array<GroupModel>= new Array<GroupModel>();
-enableEdit:boolean;
-  constructor(public navCtrl: NavController, 
-              public navParams: NavParams,
-              private dataApi: MeetingApi,
-              private loaderController:LoadingController) {
   }
 
-  ionViewDidLoad() {
-    this.enableEdit=false;
-    let loader=this.loaderController.create({
-      content:"Getting Groups..."
+  public async ionViewDidLoad() {
+    this.enableEdit = false;
+    let loader = this.loaderController.create({
+      content: "Getting Groups..."
     });
-    loader.present().then(()=>{
-            this.groups=this.dataApi.myGroups;
-      loader.dismiss();
-    });
+
+    loader.present();
+    this.groups = await this.dataApi.myGroups;
+    loader.dismiss();
   }
 
-  goToTheGroup(event, group)
-  {
-    this.enableEdit=false;
-    this.navCtrl.push(GroupPage,{group:group,enableEdit:this.enableEdit});
+  public goToTheGroup(event, group) {
+    this.enableEdit = false;
+    this.navCtrl.push(GroupPage, { group: group, enableEdit: this.enableEdit });
   }
-  addNewGroup()
-  {
+
+  public addNewGroup() {
     let group = new GroupModel();
-    group.Id="-1";
-    this.enableEdit=true;
-    this.navCtrl.push(GroupPage,{group:new GroupModel,enableEdit:this.enableEdit});
+    group.Id = "-1";
+    this.enableEdit = true;
+    this.navCtrl.push(GroupPage, { group: new GroupModel, enableEdit: this.enableEdit });
   }
 }

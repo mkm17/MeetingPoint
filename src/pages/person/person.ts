@@ -9,16 +9,17 @@ import { PersonModel } from '../../shared/shared';
   templateUrl: 'person.html',
 })
 export class PersonPage {
-person: PersonModel;
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
-    this.person=this.navParams.data;
-}
 
-  ionViewDidLoad() {
+  private person: PersonModel;
+  constructor(public navCtrl: NavController, public navParams: NavParams) {
+    this.person = this.navParams.data;
+  }
+
+  public ionViewDidLoad() {
     console.log('ionViewDidLoad Person');
   }
-  goHomePage()
-  {
+
+  public goHomePage() {
     this.navCtrl.setRoot(HomePage);
   }
 }

@@ -14,12 +14,11 @@ export class GroupPage {
 
   private group: GroupModel;
   private people: Array<PersonModel> = new Array<PersonModel>();
-  //private peopleToDisplay: Array<PersonModel> = new Array<PersonModel>();
   private editEnableGroup: boolean;
   private isGroupOwner: boolean;
 
   constructor(public navCtrl: NavController, public navParams: NavParams,
-    private dataApi: MeetingApi, /*private loaderController: LoadingController*/) {
+    private dataApi: MeetingApi) {
 
     this.group = navParams.data.group;
     this.editEnableGroup = navParams.data.enableEdit;
@@ -30,20 +29,7 @@ export class GroupPage {
   }
 
   protected ionViewDidLoad() {
-   /* let loader = this.loaderController.create({
-      content: 'Getting Groups...'
-    });*/
-    //await loader.present();
-    //let that = this;
     if (!this.group || !this.group.People) { return; }
-    /*this.group.People.forEach((groupPerson) => {
-      let person = that.dataApi.myPeople.find(person => person.Id === groupPerson)
-      if (person) {
-        that.people.push(person);
-      }
-
-    });*/
-    //loader.dismiss();
   }
 
   public goHomePage() {
@@ -68,7 +54,6 @@ export class GroupPage {
   }
 
   addPeopleView(group: GroupModel) {
-    //let that = this;
     this.navCtrl.push(PeopleList, { currentPeople: group.People, callback: this.personListCallback });
   }
 

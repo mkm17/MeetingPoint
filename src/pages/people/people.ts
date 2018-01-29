@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, LoadingController } from 'ionic-angular';
 import { PersonPage } from '../person/person';
-import { MeetingApi } from '../../shared/shared';
+import { MeetingApi, PersonModel } from '../../shared/shared';
 
 @IonicPage()
 @Component({
@@ -10,28 +10,26 @@ import { MeetingApi } from '../../shared/shared';
 })
 export class PeoplePage {
 
-people:any;// Array<PersonModel>;
+  people: Array<PersonModel>;
 
-  constructor(public navCtrl: NavController, 
-              public navParams: NavParams,
-              private dataApi:MeetingApi,
-              private loaderController:LoadingController) {
-    
-}
+  constructor(public navCtrl: NavController,
+    public navParams: NavParams,
+    private dataApi: MeetingApi,
+    private loaderController: LoadingController) {
 
-  ionViewDidLoad() {
-    let loader=this.loaderController.create({
-      content:"Getting People..."
+  }
+
+  public async ionViewDidLoad() {
+    let loader = this.loaderController.create({
+      content: "Getting People..."
     });
-    loader.present().then(()=>{
-          this.people=this.dataApi.myPeople;
-      loader.dismiss();
-    });
-}
+    loader.present();
+    this.people = await this.dataApi.myPeople;
+    loader.dismiss();
+  }
 
-  goToThePerson(event, person)
-  {
-    this.navCtrl.push(PersonPage,person);
+  public goToThePerson(event, person) {
+    this.navCtrl.push(PersonPage, person);
   }
 
 }

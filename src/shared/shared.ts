@@ -4,3 +4,6 @@ export * from '../model/GroupModel';
 export * from '../model/MapPoint';
 export * from '../model/MeetingModel';
 export * from '../model/PersonModel';
+export * from '../model/GroupModelView';
+export * from '../model/Marker';
+export * from '../model/PersonModelView';
