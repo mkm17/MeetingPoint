@@ -4,6 +4,7 @@ import { HomePage } from '../home/home';
 import { MeetingApi, MeetingModel, GroupModel, Marker } from '../../shared/shared';
 import { GroupPage } from '../group/group';
 import { GroupsList } from '../groups-list/groups-list';
+import * as moment from 'moment';
 
 declare let google;
 @IonicPage()
@@ -17,26 +18,30 @@ export class MeetingPage {
     map: any;
 
     private meeting: MeetingModel;
+    private meetingDate: string;
     private editEnableMeeting: boolean;
     private marker: Marker = new Marker();
     private groups: Array<GroupModel> = new Array<GroupModel>();
 
     constructor(public navCtrl: NavController, public navParams: NavParams, private dataApi: MeetingApi) {
         this.meeting = this.navParams.data.meeting;
+        this.meetingDate = new Date(this.meeting.Date).toISOString();
+        this.editEnableMeeting = this.navParams.data.enableEdit;
+    }
+
+    public async ionViewDidLoad() {
         if (this.meeting.Id) {
             this.marker.lat = Number(this.meeting.MapPoint.lat);
             this.marker.lng = Number(this.meeting.MapPoint.lng);
             this.marker.draggable = true;
         }
         else {
-            this.marker.lat = Number(this.dataApi.GetCurrentUser().MapPoint.lat);
-            this.marker.lng = Number(this.dataApi.GetCurrentUser().MapPoint.lng);
+            let userLocation = await this.dataApi.getUserCurrentPosition();
+            this.marker.lat = Number(userLocation.lat);
+            this.marker.lng = Number(userLocation.lng);
             this.marker.draggable = true;
         }
-        this.editEnableMeeting = this.navParams.data.enableEdit;
-    }
 
-    public ionViewDidLoad() {
         this.loadMap();
         if (this.meeting.Groups) {
             this.meeting.Groups.forEach(function (meetingGroup) {
@@ -66,6 +71,7 @@ export class MeetingPage {
         this.meeting.Groups = groupIds;
         this.meeting.MapPoint.lat = String(this.marker.lat);
         this.meeting.MapPoint.lng = String(this.marker.lng);
+        this.meeting.Date = this.meetingDate;
         if (!this.meeting.Id) {
             this.dataApi.AddMeeting(this.meeting, this.groups);
         } else {
@@ -75,10 +81,8 @@ export class MeetingPage {
     }
 
     public markerDragEnd(m: Marker, $event: any) {
-
         this.marker.lat = $event.coords.lat;
         this.marker.lng = $event.coords.lng
-
     }
 
     public mapClicked($event: any) {
@@ -96,15 +100,12 @@ export class MeetingPage {
     }
 
     private loadMap() {
-
-        let latLng = new google.maps.LatLng(-34.9290, 138.6010);
-
+        let latLng = new google.maps.LatLng(this.marker.lat, this.marker.lng);
         let mapOptions = {
             center: latLng,
             zoom: 15,
             mapTypeId: google.maps.MapTypeId.ROADMAP
         }
-
         this.map = new google.maps.Map(this.mapElement.nativeElement, mapOptions);
     }
 }
