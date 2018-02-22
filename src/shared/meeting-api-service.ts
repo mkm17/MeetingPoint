@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import 'rxjs';
 import { GroupModel, MapPoint, MeetingModel, PersonModel } from './shared';
 import { Geolocation } from '@ionic-native/geolocation';
+import * as _ from 'lodash';
 
 @Injectable()
 export class MeetingApi {
@@ -25,18 +26,24 @@ export class MeetingApi {
         this.myMeetings = new Array<MeetingModel>();
     }
 
-    public GetActivePropertyOfUser(): boolean {
-        if (!this.currentUser) { return false }
-        return this.currentUser.Active;
+    public async GetActivePropertyOfUser(): Promise<boolean> {
+        let user = await this.GetCurrentUser();
+        console.log(user);
+        return user.Active;
     }
 
-    GetCurrentUser(): PersonModel {
+    public async GetCurrentUser(): Promise<PersonModel> {
         if (this.currentUser) { return this.currentUser; }
-        let that = this;
-        this.GetUserDB("0").then(function (userData) {
-            return that.currentUser;
-        });
+        return await this.GetUserDB("0");
     }
+
+    public async getUserCurrentPosition(): Promise<MapPoint> {
+        let location = await this.geolocation.getCurrentPosition();
+        let lngValue = String(location.coords.longitude);
+        let latValue = String(location.coords.latitude);
+        return { lat: latValue, lng: lngValue }
+    }
+
     GetUserDB(fbId: string): Promise<PersonModel> {
         let that = this;
         return new Promise<PersonModel>((resolve, reject) => {
@@ -63,24 +70,17 @@ export class MeetingApi {
 
         });
     }
-    UpdateActiveValue(isActive: boolean) {
-        let lngValue = this.currentUser.MapPoint.lng;
-        let latValue = this.currentUser.MapPoint.lat;
+
+    public async UpdateActiveValue(isActive: boolean) {
         if (isActive) {
-            this.geolocation.getCurrentPosition().then((resp) => {
-                lngValue = String(resp.coords.longitude);
-                latValue = String(resp.coords.latitude);
-
-                this.peopleRefDB.child(this.currentUser.Id + "/").update({
-                    "Active": isActive,
-                    "lat": latValue,
-                    "lng": lngValue,
-                    "LastUpdate": new Date().toLocaleString()
-                });
-
-            }).catch((error) => {
-                console.log('Error getting location', error);
+            let location = await this.getUserCurrentPosition();
+            this.peopleRefDB.child(this.currentUser.Id + "/").update({
+                "Active": isActive,
+                "lat": location.lat,
+                "lng": location.lng,
+                "LastUpdate": new Date().toLocaleString()
             });
+
         }
         this.peopleRefDB.child(this.currentUser.Id + "/").update({
             "Active": isActive,
@@ -128,7 +128,7 @@ export class MeetingApi {
                     if (this.currentUser.Groups.hasOwnProperty(key)) {
                         that.groupRefDB.child(key + "/").on("value", function (data) {
                             let newItem = false;
-                            let group = that.myGroups.find(group => group.Id == data.key);
+                            let group = _.find(that.myGroups, (group => { return group.Id === data.key; }));
                             if (!group) {
                                 group = new GroupModel();
                                 newItem = true;
@@ -161,7 +161,7 @@ export class MeetingApi {
                     {
                         that.peopleRefDB.child(key + "/").on("value", function (data) {
                             let newItem = false;
-                            let person = that.myPeople.find(person => person.Id == data.key);
+                            let person = _.find(that.myPeople, (person => { return person.Id === data.key }));
                             if (!person) {
                                 person = new PersonModel();
                                 newItem = true;
@@ -241,27 +241,4 @@ export class MeetingApi {
     }
 
 
-}
-
-if (!Array.prototype.find) {
-    Array.prototype.find = function (predicate) {
-        if (this == null) {
-            throw new TypeError('Array.prototype.find called on null or undefined');
-        }
-        if (typeof predicate !== 'function') {
-            throw new TypeError('predicate must be a function');
-        }
-        var list = Object(this);
-        var length = list.length >>> 0;
-        var thisArg = arguments[1];
-        var value;
-
-        for (var i = 0; i < length; i++) {
-            value = list[i];
-            if (predicate.call(thisArg, value, i, list)) {
-                return value;
-            }
-        }
-        return undefined;
-    };
 }

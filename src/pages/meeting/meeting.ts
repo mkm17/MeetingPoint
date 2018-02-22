@@ -1,16 +1,20 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild, ElementRef } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { HomePage } from '../home/home';
 import { MeetingApi, MeetingModel, GroupModel, Marker } from '../../shared/shared';
 import { GroupPage } from '../group/group';
 import { GroupsList } from '../groups-list/groups-list';
 
+declare let google;
 @IonicPage()
 @Component({
     selector: 'page-meeting',
     templateUrl: 'meeting.html',
 })
 export class MeetingPage {
+
+    @ViewChild('map') mapElement: ElementRef;
+    map: any;
 
     private meeting: MeetingModel;
     private editEnableMeeting: boolean;
@@ -33,7 +37,7 @@ export class MeetingPage {
     }
 
     public ionViewDidLoad() {
-
+        this.loadMap();
         if (this.meeting.Groups) {
             this.meeting.Groups.forEach(function (meetingGroup) {
                 let group = this.dataApi.myGroups.find(group => group.Id === meetingGroup)
@@ -87,7 +91,20 @@ export class MeetingPage {
         this.navCtrl.push(GroupsList, { currentGroups: meeting.Groups, callback: this.groupsListCallback });
     }
 
-    public groupsListCallback(params:any) {
+    public groupsListCallback(params: any) {
         return params;
+    }
+
+    private loadMap() {
+
+        let latLng = new google.maps.LatLng(-34.9290, 138.6010);
+
+        let mapOptions = {
+            center: latLng,
+            zoom: 15,
+            mapTypeId: google.maps.MapTypeId.ROADMAP
+        }
+
+        this.map = new google.maps.Map(this.mapElement.nativeElement, mapOptions);
     }
 }
