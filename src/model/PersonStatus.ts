@@ -1,7 +1,7 @@
-enum PersonStatus {
+export enum PersonStatus {
+    All,
     Party,
     Dinner,
     Sport,
-    NoMakeup,
     Intelectual
 }

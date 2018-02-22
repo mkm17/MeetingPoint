@@ -21,22 +21,22 @@ export class SpontaneousPage {
     private dataApi: MeetingApi, private loaderController: LoadingController) {
     this.showActive = true;
     this.showInactive = false;
-    
-    this.currentPosition.lat = Number(this.dataApi.getUserCurrentPosition());
-    this.currentPosition.lng = Number(this.dataApi.GetCurrentUser().MapPoint.lng);
   }
 
-  public ionViewDidLoad() {
+  public async ionViewDidLoad() {
     let loader = this.loaderController.create({
       content: "Getting People..."
     });
     loader.present();
+    let userPosition =  await this.dataApi.getUserCurrentPosition();
+    console.log(userPosition);
+    this.currentPosition={lat: Number(userPosition.lat), lng:  Number(userPosition.lng), draggable:false} ;
     this.loadMap();
     loader.dismiss();
-    setInterval(() => this.loadMap(), 10000);
+    //setInterval(() => this.loadMap(), 10000);
   }
 
-  loadMap() {
+  private loadMap() {
 
     let activePeople: Array<PersonModel> = new Array<PersonModel>();
     let inactivePeople: Array<PersonModel> = new Array<PersonModel>();
@@ -50,6 +50,7 @@ export class SpontaneousPage {
       }
     }
 
+    console.log(this.currentPosition);
     let latLng = new google.maps.LatLng(this.currentPosition.lat, this.currentPosition.lng);
 
     let mapOptions = {

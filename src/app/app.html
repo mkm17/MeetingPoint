@@ -13,6 +13,12 @@
       <div item-right>ActiveButton <ion-toggle [(ngModel)]="active" (ionChange)="updateActive()"
        [disabled]="activeButtonDisabled"></ion-toggle></div>
     </div>
+    <ion-item>
+      <ion-label>Status</ion-label>
+      <ion-select [(ngModel)]="meetingType">
+        <ion-option *ngFor="let status of statuses" [value]="status">{{status}}</ion-option>
+      </ion-select>
+    </ion-item>
     <ion-list>
       <button menuClose ion-item *ngFor="let p of pages" (click)="openPage(p)">
         {{p.title}}

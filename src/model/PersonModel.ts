@@ -1,4 +1,5 @@
 import { GroupModel, MeetingModel, MapPoint } from '../shared/shared';
+import { PersonStatus } from './PersonStatus';
 
 export class PersonModel {
     Id: string;
