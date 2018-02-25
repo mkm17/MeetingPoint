@@ -33,7 +33,6 @@ export class SpontaneousPage {
     this.currentPosition={lat: Number(userPosition.lat), lng:  Number(userPosition.lng), draggable:false} ;
     this.loadMap();
     loader.dismiss();
-    //setInterval(() => this.loadMap(), 10000);
   }
 
   private loadMap() {
@@ -49,9 +48,10 @@ export class SpontaneousPage {
         inactivePeople.push(personToAdd);
       }
     }
-
-    console.log(this.currentPosition);
-    let latLng = new google.maps.LatLng(this.currentPosition.lat, this.currentPosition.lng);
+ 
+    let lat = this.currentPosition.lat ? this.currentPosition.lat : 0;
+    let lng = this.currentPosition.lng ? this.currentPosition.lng : 0;
+    let latLng = new google.maps.LatLng(lat, lng);
 
     let mapOptions = {
       center: latLng,

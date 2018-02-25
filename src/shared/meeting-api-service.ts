@@ -3,6 +3,7 @@ import 'rxjs';
 import { GroupModel, MapPoint, MeetingModel, PersonModel } from './shared';
 import { Geolocation } from '@ionic-native/geolocation';
 import * as _ from 'lodash';
+import { PersonStatus } from '../model/PersonStatus';
 
 @Injectable()
 export class MeetingApi {
@@ -49,6 +50,7 @@ export class MeetingApi {
         return new Promise<PersonModel>((resolve, reject) => {
             this.peopleRefDB.child(fbId + "/").on("value", function (data) {
                 let person: PersonModel = new PersonModel();
+                console.log(data.val());
                 person.Active = data.val().Active;
                 person.FbId = data.val().FBid;
                 person.Id = data.val().Id;
@@ -57,6 +59,7 @@ export class MeetingApi {
                 person.Meetings = data.val().Meetings;
                 person.People = data.val().People;
                 person.LastUpdate = data.val().LastUpdate;
+                person.Status=data.val().Status;
                 let point: MapPoint = new MapPoint();
                 point.lat = data.val().lat;
                 point.lng = data.val().lng;
@@ -71,13 +74,14 @@ export class MeetingApi {
         });
     }
 
-    public async UpdateActiveValue(isActive: boolean) {
+    public async UpdateActiveValue(isActive: boolean, status:PersonStatus) {
         if (isActive) {
             let location = await this.getUserCurrentPosition();
             this.peopleRefDB.child(this.currentUser.Id + "/").update({
                 "Active": isActive,
                 "lat": location.lat,
                 "lng": location.lng,
+                "Status":status,
                 "LastUpdate": new Date().toLocaleString()
             });
 

@@ -1,7 +1,7 @@
 export enum PersonStatus {
-    All,
-    Party,
-    Dinner,
-    Sport,
-    Intelectual
+    All = 'All',
+    Party = 'Party',
+    Dinner = 'Dinner',
+    Sport = 'Sport',
+    Intelectual = 'Intelectual'
 }

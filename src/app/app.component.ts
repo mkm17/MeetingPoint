@@ -24,14 +24,15 @@ import { PersonStatus } from '../model/PersonStatus';
     ]
 })
 export class MyApp {
+
     @ViewChild(Nav) nav: Nav;
-    rootPage: any = LoginPage;
-    pictureLink: any;
-    active: boolean = false;
-    user: PersonModel;
-    activeButtonDisabled: boolean = true;
-    meetingType: string;
-    statuses: any[];
+    private rootPage: any = LoginPage;
+    private pictureLink: any;
+    private active: boolean = false;
+    private user: PersonModel;
+    private activeButtonDisabled: boolean = true;
+    private statuses: any[];
+    private userStuatus: PersonStatus;
 
     pages: Array<{ title: string, component: any }>;
 
@@ -52,9 +53,10 @@ export class MyApp {
 
     async initializeApp() {
         await this.platform.ready();
-        this.statuses=Object.keys(PersonStatus).filter(key => {return !isNaN(Number(PersonStatus[key]));});
-        console.log(this.statuses);
-        this.active = await this.dataApi.GetActivePropertyOfUser();
+        let currentUser: PersonModel = await this.dataApi.GetCurrentUser();
+        this.statuses = Object.keys(PersonStatus);
+        this.userStuatus = currentUser.Status;
+        this.active = currentUser.Active
         this.activeButtonDisabled = false;
     }
 
@@ -63,11 +65,12 @@ export class MyApp {
     }
 
     updateActive() {
-        this.dataApi.UpdateActiveValue(this.active);
+        this.dataApi.UpdateActiveValue(this.active, this.userStuatus);
     }
 
     menuOpened() {
     }
+
     menuClosed() {
     }
 }
