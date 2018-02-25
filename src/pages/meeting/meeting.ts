@@ -22,26 +22,30 @@ export class MeetingPage {
     private editEnableMeeting: boolean;
     private marker: Marker = new Marker();
     private groups: Array<GroupModel> = new Array<GroupModel>();
+    private meetingPosition: any;
+    private meetingMarker: any;
 
     constructor(public navCtrl: NavController, public navParams: NavParams, private dataApi: MeetingApi) {
         this.meeting = this.navParams.data.meeting;
-        this.meetingDate = new Date(this.meeting.Date).toISOString();
+        this.meetingDate = (this.meeting.Date) ? new Date(this.meeting.Date).toISOString() : null;
         this.editEnableMeeting = this.navParams.data.enableEdit;
     }
 
     public async ionViewDidLoad() {
+
         if (this.meeting.Id) {
             this.marker.lat = Number(this.meeting.MapPoint.lat);
             this.marker.lng = Number(this.meeting.MapPoint.lng);
             this.marker.draggable = true;
         }
         else {
+            alert('as tu');
             let userLocation = await this.dataApi.getUserCurrentPosition();
             this.marker.lat = Number(userLocation.lat);
             this.marker.lng = Number(userLocation.lng);
             this.marker.draggable = true;
         }
-
+        this.meetingPosition = new google.maps.LatLng(this.marker.lat, this.marker.lng);
         this.loadMap();
         if (this.meeting.Groups) {
             this.meeting.Groups.forEach(function (meetingGroup) {
@@ -69,8 +73,8 @@ export class MeetingPage {
             groupIds.push(group.Id);
         });
         this.meeting.Groups = groupIds;
-        this.meeting.MapPoint.lat = String(this.marker.lat);
-        this.meeting.MapPoint.lng = String(this.marker.lng);
+        this.meeting.MapPoint.lat = String( this.meetingMarker.position.lat);
+        this.meeting.MapPoint.lng = String( this.meetingMarker.position.lng);
         this.meeting.Date = this.meetingDate;
         if (!this.meeting.Id) {
             this.dataApi.AddMeeting(this.meeting, this.groups);
@@ -80,17 +84,6 @@ export class MeetingPage {
         this.editEnableMeeting = false;
     }
 
-    public markerDragEnd(m: Marker, $event: any) {
-        this.marker.lat = $event.coords.lat;
-        this.marker.lng = $event.coords.lng
-    }
-
-    public mapClicked($event: any) {
-        if (this.editEnableMeeting) {
-            this.marker.lat = $event.coords.lat;
-            this.marker.lng = $event.coords.lng
-        }
-    }
     public addGroupsView(meeting: MeetingModel) {
         this.navCtrl.push(GroupsList, { currentGroups: meeting.Groups, callback: this.groupsListCallback });
     }
@@ -100,12 +93,22 @@ export class MeetingPage {
     }
 
     private loadMap() {
-        let latLng = new google.maps.LatLng(this.marker.lat, this.marker.lng);
         let mapOptions = {
-            center: latLng,
+            center: this.meetingPosition,
             zoom: 15,
             mapTypeId: google.maps.MapTypeId.ROADMAP
         }
         this.map = new google.maps.Map(this.mapElement.nativeElement, mapOptions);
+        this.map.addListener('click', (ev) => { this.onMapClick(ev, this.map) });
+    }
+    private onMapClick(mouseEvent: any, map: any) {
+        if (!this.editEnableMeeting) { return; }
+        if (this.meetingMarker) { this.meetingMarker.setMap(null); }
+        this.meetingMarker = new google.maps.Marker({
+            position: mouseEvent.latLng,
+            map: map,
+            animation: google.maps.Animation.DROP
+        });
+        map.panTo(mouseEvent.latLng);
     }
 }

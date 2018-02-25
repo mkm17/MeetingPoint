@@ -17,6 +17,7 @@ export class MeetingApi {
     private groupRefName: string = "groups/";
     private peopleRefName: string = "people/";
     private meetingRefName: string = "meetings/";
+    private userID: string;
 
     constructor(private geolocation: Geolocation) {
         this.groupRefDB = firebase.database().ref(this.groupRefName);
@@ -27,22 +28,36 @@ export class MeetingApi {
         this.myMeetings = new Array<MeetingModel>();
     }
 
+    public setUserId(userId: string) {
+        this.userID = userId;
+    }
+
     public async GetActivePropertyOfUser(): Promise<boolean> {
         let user = await this.GetCurrentUser();
-        console.log(user);
         return user.Active;
     }
 
     public async GetCurrentUser(): Promise<PersonModel> {
+        if (!this.userID) { return null; }
         if (this.currentUser) { return this.currentUser; }
-        return await this.GetUserDB("0");
+        return await this.GetUserDB(this.userID);
     }
 
     public async getUserCurrentPosition(): Promise<MapPoint> {
-        let location = await this.geolocation.getCurrentPosition();
-        let lngValue = String(location.coords.longitude);
-        let latValue = String(location.coords.latitude);
-        return { lat: latValue, lng: lngValue }
+        if (!this.geolocation) return { lat: '0', lng: '0' };
+        return this.geolocation.getCurrentPosition({ maximumAge: 60000, timeout: 5000, enableHighAccuracy: true }).then(
+            (location) => {
+                if (!location || !location.coords) return { lat: '0', lng: '0' };
+                let lngValue = String(location.coords.longitude);
+                let latValue = String(location.coords.latitude);
+                return { lat: latValue, lng: lngValue }
+            },
+            (error) => {
+                return { lat: '0', lng: '0' };
+            }
+
+
+        );
     }
 
     GetUserDB(fbId: string): Promise<PersonModel> {
@@ -59,7 +74,7 @@ export class MeetingApi {
                 person.Meetings = data.val().Meetings;
                 person.People = data.val().People;
                 person.LastUpdate = data.val().LastUpdate;
-                person.Status=data.val().Status;
+                person.Status = data.val().Status;
                 let point: MapPoint = new MapPoint();
                 point.lat = data.val().lat;
                 point.lng = data.val().lng;
@@ -74,16 +89,17 @@ export class MeetingApi {
         });
     }
 
-    public async UpdateActiveValue(isActive: boolean, status:PersonStatus) {
+    public async UpdateActiveValue(isActive: boolean, status: PersonStatus) {
         if (isActive) {
             let location = await this.getUserCurrentPosition();
             this.peopleRefDB.child(this.currentUser.Id + "/").update({
                 "Active": isActive,
                 "lat": location.lat,
                 "lng": location.lng,
-                "Status":status,
+                "Status": status,
                 "LastUpdate": new Date().toLocaleString()
             });
+            alert('status updated');
 
         }
         this.peopleRefDB.child(this.currentUser.Id + "/").update({
@@ -93,6 +109,7 @@ export class MeetingApi {
     GetUsersMeetings(): Promise<Array<MeetingModel>> {
         if (this.currentUser) {
             let that = this;
+            alert(this.currentUser.Meetings);
             return new Promise<Array<MeetingModel>>((resolve, reject) => {
                 for (var key in this.currentUser.Meetings) {
                     if (this.currentUser.Meetings.hasOwnProperty(key)) //{

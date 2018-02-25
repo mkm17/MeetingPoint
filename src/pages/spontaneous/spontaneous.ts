@@ -25,11 +25,10 @@ export class SpontaneousPage {
 
   public async ionViewDidLoad() {
     let loader = this.loaderController.create({
-      content: "Getting People..."
+      content: "Getting Map..."
     });
     loader.present();
     let userPosition =  await this.dataApi.getUserCurrentPosition();
-    console.log(userPosition);
     this.currentPosition={lat: Number(userPosition.lat), lng:  Number(userPosition.lng), draggable:false} ;
     this.loadMap();
     loader.dismiss();

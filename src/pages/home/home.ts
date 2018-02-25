@@ -8,30 +8,21 @@ import { NativeStorage } from '@ionic-native/native-storage';
 })
 export class HomePage {
 
-pictureLink:any;
-gender:any;
-name:any;
-user:any;
+  pictureLink: any;
+  gender: any;
+  name: any;
+  user: any;
 
-  constructor(public navCtrl: NavController, public nativeStorage:NativeStorage, public navParams: NavParams) {
-
-      this.name = "Michał";
-      this.gender= "Male";
-      this.pictureLink= "https://graph.facebook.com/1739113556102774/picture?type=large";
-      this.user=this.navParams.data.user;
+  constructor(public navCtrl: NavController, public nativeStorage: NativeStorage, public navParams: NavParams) {
+    this.user = this.navParams.data.user;
   }
 
-  ionViewDidLoad(){
-    /*let that=this;
-      this.nativeStorage.getItem('user').then( function (data) {
-        that.pictureLink=data.picture;
-        that.name=data.name;
-        that.gender=data.gender;
-      }, function (error) {
-        alert(error);
-      });*/
+  protected async ionViewDidLoad() {
 
-       
+    let userData = await this.nativeStorage.getItem('user');
+    this.pictureLink = userData.picture;
+    this.name = userData.name;
+    this.gender = userData.gender;
   }
 
 }

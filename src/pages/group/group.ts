@@ -22,14 +22,15 @@ export class GroupPage {
 
     this.group = navParams.data.group;
     this.editEnableGroup = navParams.data.enableEdit;
-    this.isGroupOwner = (this.group.Owner === this.dataApi.GetCurrentUser().Id);
-    if (!this.group.Owner) {
-      this.group.Owner = this.dataApi.GetCurrentUser().Id;
-    }
   }
 
-  protected ionViewDidLoad() {
+  protected async ionViewDidLoad() {
     if (!this.group || !this.group.People) { return; }
+    let currentUser = await this.dataApi.GetCurrentUser();
+    this.isGroupOwner = (this.group.Owner === currentUser.Id);
+    if (!this.group.Owner) {
+      this.group.Owner = currentUser.Id;
+    }
   }
 
   public goHomePage() {

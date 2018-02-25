@@ -11,7 +11,6 @@ import { LoginPage } from '../pages/login/login';
 import { SpontaneousPage } from '../pages/spontaneous/spontaneous';
 import { MeetingApi, PersonModel } from '../shared/shared';
 import { NativeStorage } from '@ionic-native/native-storage';
-//import { Facebook } from '@ionic-native/facebook';
 import * as firebase from "firebase";
 import { PersonStatus } from '../model/PersonStatus';
 
@@ -40,8 +39,6 @@ export class MyApp {
         public splashScreen: SplashScreen, private nativeStorage: NativeStorage,
   /* private facebook:Facebook,*/ private dataApi: MeetingApi) {
         this.initializeApp();
-
-        this.pictureLink = "https://graph.facebook.com/1739113556102774/picture?type=large";
         this.pages = [
             { title: 'Home', component: HomePage },
             { title: 'Meetings', component: MeetingsPage },
@@ -53,10 +50,8 @@ export class MyApp {
 
     async initializeApp() {
         await this.platform.ready();
-        let currentUser: PersonModel = await this.dataApi.GetCurrentUser();
         this.statuses = Object.keys(PersonStatus);
-        this.userStuatus = currentUser.Status;
-        this.active = currentUser.Active
+
         this.activeButtonDisabled = false;
     }
 
@@ -68,7 +63,11 @@ export class MyApp {
         this.dataApi.UpdateActiveValue(this.active, this.userStuatus);
     }
 
-    menuOpened() {
+    async menuOpened() {
+        let currentUser: PersonModel = await this.dataApi.GetCurrentUser();
+        this.userStuatus = currentUser.Status;
+        this.active = currentUser.Active
+        this.pictureLink = "https://graph.facebook.com/" + currentUser.Id + "/picture?type=large";
     }
 
     menuClosed() {

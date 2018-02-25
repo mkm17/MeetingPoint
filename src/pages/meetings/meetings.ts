@@ -30,9 +30,11 @@ export class MeetingsPage {
     }
 
     public addNewMeeting() {
+        alert('new');
         let newMeeting = new MeetingModel();
         newMeeting.MapPoint = new MapPoint();
         this.enableEdit = true;
+        alert('po dupie');
         this.navCtrl.push(MeetingPage, { meeting: newMeeting, enableEdit: this.enableEdit });
     }
     public async showHistoricalMeetigs() {

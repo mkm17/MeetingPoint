@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, LoadingController } from 'ionic-angular';
 import { PersonPage } from '../person/person';
 import { MeetingApi, PersonModel } from '../../shared/shared';
+import { Facebook } from '@ionic-native/facebook';
 
 @IonicPage()
 @Component({
@@ -10,12 +11,15 @@ import { MeetingApi, PersonModel } from '../../shared/shared';
 })
 export class PeoplePage {
 
-  people: Array<PersonModel>;
+  private people: Array<PersonModel>;
+  private fbApi: Facebook;
 
   constructor(public navCtrl: NavController,
     public navParams: NavParams,
     private dataApi: MeetingApi,
-    private loaderController: LoadingController) {
+    private loaderController: LoadingController,
+    private facebook: Facebook) {
+    this.fbApi = facebook;
 
   }
 
@@ -32,4 +36,7 @@ export class PeoplePage {
     this.navCtrl.push(PersonPage, person);
   }
 
+  public async addFbPeople() {
+    let userFriends = await this.fbApi.api("/me/friends", ["user_friends"]);
+  }
 }
