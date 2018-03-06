@@ -45,7 +45,7 @@ export class MeetingApi {
 
     public async getUserCurrentPosition(): Promise<MapPoint> {
         if (!this.geolocation) return { lat: '0', lng: '0' };
-        return this.geolocation.getCurrentPosition({ maximumAge: 60000, timeout: 5000, enableHighAccuracy: true }).then(
+        return this.geolocation.getCurrentPosition({ maximumAge: 60000, timeout: 5000 }).then(
             (location) => {
                 if (!location || !location.coords) return { lat: '0', lng: '0' };
                 let lngValue = String(location.coords.longitude);
@@ -99,8 +99,6 @@ export class MeetingApi {
                 "Status": status,
                 "LastUpdate": new Date().toLocaleString()
             });
-            alert('status updated');
-
         }
         this.peopleRefDB.child(this.currentUser.Id + "/").update({
             "Active": isActive,
@@ -109,7 +107,6 @@ export class MeetingApi {
     GetUsersMeetings(): Promise<Array<MeetingModel>> {
         if (this.currentUser) {
             let that = this;
-            alert(this.currentUser.Meetings);
             return new Promise<Array<MeetingModel>>((resolve, reject) => {
                 for (var key in this.currentUser.Meetings) {
                     if (this.currentUser.Meetings.hasOwnProperty(key)) //{
@@ -190,8 +187,8 @@ export class MeetingApi {
 
                             person.Active = data.val().Active;
                             //person.BirthDate=data.val().BirthDate;
-                            person.FbId = data.val().FBId;
-                            //person.Status=data.val().Status;
+                            person.FbId = data.val().FbId;
+                            person.Status=data.val().Status;
                             //person.Photo=data.val().Photo;
                             //person.Surname=data.val().Surname;
                             person.LastUpdate = data.val().LastUpdate;

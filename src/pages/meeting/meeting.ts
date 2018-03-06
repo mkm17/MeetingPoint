@@ -39,7 +39,6 @@ export class MeetingPage {
             this.marker.draggable = true;
         }
         else {
-            alert('as tu');
             let userLocation = await this.dataApi.getUserCurrentPosition();
             this.marker.lat = Number(userLocation.lat);
             this.marker.lng = Number(userLocation.lng);
@@ -73,8 +72,8 @@ export class MeetingPage {
             groupIds.push(group.Id);
         });
         this.meeting.Groups = groupIds;
-        this.meeting.MapPoint.lat = String( this.meetingMarker.position.lat);
-        this.meeting.MapPoint.lng = String( this.meetingMarker.position.lng);
+        this.meeting.MapPoint.lat = String(this.meetingMarker.getPosition().lat());
+        this.meeting.MapPoint.lng = String(this.meetingMarker.getPosition().lng());
         this.meeting.Date = this.meetingDate;
         if (!this.meeting.Id) {
             this.dataApi.AddMeeting(this.meeting, this.groups);
@@ -98,7 +97,13 @@ export class MeetingPage {
             zoom: 15,
             mapTypeId: google.maps.MapTypeId.ROADMAP
         }
+
         this.map = new google.maps.Map(this.mapElement.nativeElement, mapOptions);
+        this.meetingMarker = new google.maps.Marker({
+            position: this.meetingPosition,
+            map: this.map,
+            animation: google.maps.Animation.DROP
+        });
         this.map.addListener('click', (ev) => { this.onMapClick(ev, this.map) });
     }
     private onMapClick(mouseEvent: any, map: any) {

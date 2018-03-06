@@ -30,11 +30,9 @@ export class MeetingsPage {
     }
 
     public addNewMeeting() {
-        alert('new');
         let newMeeting = new MeetingModel();
         newMeeting.MapPoint = new MapPoint();
         this.enableEdit = true;
-        alert('po dupie');
         this.navCtrl.push(MeetingPage, { meeting: newMeeting, enableEdit: this.enableEdit });
     }
     public async showHistoricalMeetigs() {
@@ -57,8 +55,8 @@ export class MeetingsPage {
         });
         loader.present();
         let actualMeetings = await this.dataApi.myMeetings.filter((val: MeetingModel) => {
-            val.daysDiff = moment(val.Date).diff(new Date(),'days');
-            return val.daysDiff>=0;
+            val.daysDiff = moment(new Date()).diff(val.Date,'days');
+            return val.daysDiff<0;
         });
         this.meetings = actualMeetings.sort((a, b) => {
             return (a.Date > b.Date) ? 1 : (a.Date === b.Date) ? 0 : -1;

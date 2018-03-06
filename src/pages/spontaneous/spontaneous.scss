@@ -3,6 +3,22 @@ page-spontaneous {
     width: 100%;
     height: 300px;
   }
+  .activePerson{
+    position: absolute;    
+    width: 40px;
+    height: 20px;
+    background: blue;
+
+    .personImage{
+      width: 20px;
+      height: 20px;
+    }
+
+    .personIcon{
+      width: 20px;
+      height: 20px;
+    }
+  }
 }
 
 
